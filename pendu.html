@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Pendu</title>
+    <style>
+        body {
+            text-align: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #41206675 0%, #ff0000 100%);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+             display: flex;
+             flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .items {
+            text-align: center;
+            margin : 0 20px;
+        }
+        h1 {
+            color: rgb(0, 0, 0);
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .joueur {
+            padding: 10px;
+            font-size: 16px;
+            width: 120px;   
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+    <script>    
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        verifierLettre();
+    }
+});
+
+
+function initialisation (){
+    if(document.getElementById("langue").value === "fr"){
+liste_mots = ['emilion', 'ordinateur', 'javascript', 'python', 'document', 'programmation', 'developpeur', 'interface', 'application', 'reseau', 
+"abandon","abeille","aberration","absence","absolu","accent","acceptation","accord",
+"accueil","action","activite","addition","adresse","adulte","affaire","affection",
+"affichage","agilite","agriculture","aide","aiguille","air","alerte","algorithme",
+"alliance","alphabet","ambiance","amitie","amour","analyse","animal","annonce",
+"antenne","anxiete","appareil","apparence","application","apprentissage","archive",
+"argent","argument","arbre","architecture","ardeur","arme","arome","arrivee",
+"article","artiste","aspect","assemblage","assistance","association","attaque",
+"attention","attraction","audace","auteur","automne","avantage","avenir","aventure",
+
+"bagage","balle","banque","barriere","base","bataille","batiment","beaute","besoin",
+"bibliotheque","bilan","boisson","bonheur","bord","bouteille","brise","budget",
+"bureau","brouillard","bruit",
+
+"calcul","calme","campagne","capacite","capitale","capture","caractere","carriere",
+"carte","cause","celebration","centre","cerveau","chaine","chance","changement",
+"chapitre","charge","chateau","chaud","chemin","chimie","choix","chronologie",
+"cible","circulation","citoyen","civilisation","classe","climat","cloche","code",
+"colere","collectif","collision","colonne","combat","commande","commerce",
+"communication","compagnon","competence","complexite","comportement","concept",
+"conclusion","condition","confiance","conflit","connexion","conscience","consequence",
+"construction","contact","contenu","continuite","contrainte","controle","conversation",
+"cooperation","coordination","courage","creation","creature","crise","critique",
+"croissance","culture",
+
+"danger","decision","declaration","decouverte","defense","definition","degradation",
+"delai","demande","densite","depart","dependance","deplacement","desir","detail",
+"determination","developpement","dialogue","difference","difficulte","dimension",
+"direction","discours","discussion","distance","distribution","diversite","document",
+"domaine","doute","duree",
+
+"echange","echec","eclairage","economie","ecosysteme","ecriture","editeur",
+"effet","efficacite","effort","egalite","element","emotion","empire","emploi",
+"encadrement","energie","engagement","enquete","entite","environnement","equilibre",
+"equipe","erreur","espace","esperance","essence","esthetique","etape","etat",
+"ethique","etude","evolution","examen","exemple","experience","expertise",
+"expression",
+
+"fabrication","facteur","famille","fatigue","faune","faveur","fiction","fidelite",
+"figure","financement","fonction","force","formation","formule","fragilite",
+"frontiere","fruit","futur",
+
+"garantie","generation","gestion","gloire","gouvernement","graphique","gravite",
+"groupe",
+
+"habitude","harmonie","histoire","horizon","hypothese",
+
+"identite","illusion","image","imagination","impact","importance","impulsion",
+"incident","indice","industrie","information","initiative","innovation","inspiration",
+"instant","institution","intelligence","interaction","interet","interface",
+"interpretation","intervention","intuition","inventaire","investissement",
+
+"journal","justice",
+
+"langage","lecture","legende","liberte","limite","logique","lumiere",
+
+"machine","magnetisme","maitrise","maladie","manifestation","memoire","message",
+"methode","mission","modele","moment","mouvement","mystere",
+
+"narration","nation","nature","necessite","negociation","niveau","notion","nombre",
+
+"objectif","observation","occasion","opinion","opposition","organisation","origine",
+"outil","ouverture",
+
+"paradoxe","parcours","partage","passion","patience","perception","performance",
+"perspective","phenomene","philosophie","physique","plaisir","politique","possibilite",
+"pouvoir","pratique","precision","prevision","principe","priorite","probleme",
+"processus","production","progres","projet","proportion","protection",
+
+"qualite","question",
+
+"reaction","realite","raison","recherche","reflexion","relation","representation",
+"reseau","resistance","ressource","responsabilite","resultat","reussite","revelation",
+"rythme",
+
+"savoir","science","securite","sensation","sens","serie","silence","situation",
+"societe","solution","structure","succes","surface","systeme",
+
+"tactique","technologie","tendance","theorie","tradition","transformation",
+"transport","travail",
+
+"univers","utilite",
+
+"valeur","variation","verite","vision","vitesse","volonte",
+
+"zone","abri","absence","abysse","accent","accord","accroc","achat","acier","acrobate","acteur",
+"adresse","adulte","aeronef","affaire","agence","agenda","agile","agneau","aigle","aiguille",
+"aileron","aimant","airain","album","algue","amande","ambiance","ambre","amiral","amour",
+"ampleur","ancre","ange","angle","animal","anneau","annonce","antenne","antre","apaiser",
+"appareil","appui","arcade","archer","ardoise","arene","argent","arme","armoire","arpent",
+"arret","arrivee","arsenal","artiste","asile","aspect","assaut","assise","atelier","atlas",
+"atome","attache","auberge","aube","aubier","aucun","audace","auteur","automne","avalanche",
+"avare","avenir","averse","aveu","avion","avocat","bague","balade","balcon","bambou",
+"banane","banc","barrage","barque","bassin","bataille","bateau","baton","beaute","beige",
+"belette","belier","benefice","berceau","berger","besoin","bete","beurre","biberon","biche",
+"bijou","bilan","biere","blanc","ble","bloc","blouse","bobine","bois","boite",
+"bonheur","bord","borne","bosquet","boue","bougie","boulon","bouquet","bourdon","bourse",
+"boussole","bouton","bracelet","branche","bras","brave","brique","broderie","bronze","brouillard",
+"bruit","brume","brun","buffle","bureau","bus","cabas","cabine","cable","cactus",
+"cadeau","cadre","cafe","cage","cahier","caillou","calcaire","calcul","calme","camion",
+"camp","canal","canard","canape","canne","canon","cap","cape","caprice","caravane",
+"carbone","carotte","carreau","carte","cascade","casque","casse","cause","cave","cedre",
+"ceinture","celebre","cellier","cendre","cerf","cerise","cerveau","chaine","chaise","chaleur",
+"chambre","champ","chance","chanson","chant","chapeau","charbon","charge","charme","chasse",
+"chat","chaud","chef","chemin","chemise","chenal","chene","cher","cheval","cheveu",
+"chien","chiffre","chimere","choix","chose","chou","chute","ciel","cigare","cime",
+"cinq","cirque","citron","clair","clan","clef","climat","cloche","clou","cobalt",
+"cœur","coffre","coin","col","colline","combat","comble","comique","compas","compte",
+"conseil","contact","conte","copain","coquille","corail","corde","corne","corps","costume",
+"coton","coude","coup","courage","courbe","course","court","cousin","couteau","couvert",
+"crabe","crainte","craie","crane","cravate","crayon","creature","creux","cri","crin",
+"crise","croix","croquis","croûte","cru","cube","cuir","cuisine","cuivre","curieux",
+"cycle","cylindre","dague","dalle","danse","danger","dard","date","degre","delai",
+"delice","delta","demain","dent","depart","desir","detail","deuil","deux","devin",
+"diamant","dictee","dieu","dinde","diner","disque","distance","divan","doigt","dollar",
+"domaine","don","dormir","dossier","douceur","douze","dragon","drapeau","drap","droit",
+"duel","dur","duree","eclair","ecole","ecorce","ecran","ecureuil","edifice","effort",
+"egal","elan","elastique","electrode","eleve","elite","ellipse","embryon","emeraude","emoi",
+"empire","encre","endroit","ennemi","enorme","enveloppe","envie","epais","eponge","epreuve",
+"equipe","erable","escale","escalier","espace","espoir","esprit","essai","estime","etage",
+"etang","etoile","etrange","etude","euro","eveque","exact","examen","exil","exemple",
+"exercice","exil","exploit","faible","façon","facteur","faience","faim","falaise","fanion",
+"fantome","farine","faute","fauve","faveur","feinte","femme","fenouil","fer",
+"ferme","feu","feuille","fiable","ficelle","fier","figue","fil","filet","film",
+"fin","flamme","fleur","flocon","flûte","foi","foire","fond","foret","forme",
+"fort","fosse","fou","foule","four","fraise","franc","frange","frere","frisson",
+"fruit","fuite","fusee","gagne","galet","garage","garde","gare","gateau","gauche",
+"gaz","gel","gendarme","genie","genre","geste","geant","givre","glace","gloire",
+"golfe","gomme","gorge","goutte","grain","grand","grappe","gras","grave","grenier",
+"griffe","grille","gris","grotte","groupe","guide","guitare","habit","haie","haine",
+"haleine","halte","hamac","haricot","hasard","haut","helice","herbe","heritage","heure",
+"hibou","hiver","honneur","honte","horloge","huile","humain","humble","humeur","idee",
+"image","impact","impot","indice","infime","ingrat","insecte","instant","intime","iris",
+"ivre","jade","jambe","jardin","jaune","jean","joie","journal",
+"jour","jouet","joueur","jungle","jupe","jury","justice","lacet","lait","lampe",
+"langue","lapin","large","larme","laser","lavage","lecture","legume","lent","leçon",
+"leger","lettre","levier","libre","lierre","lieu","ligne","limite","lion","liquide",
+"liste","livre","loge","loin","loisir","loup","lourd","lueur","lumiere",
+"lune","lutte","machine","magie","maigre","main","maison","maitre","maman",
+"manger","manque","marbre","marche","mardi","mare","marge","marine","marteau","masque",
+"matin","mauve","mecene","medaille","meilleur","melon","membre","memoire","menace","merci",
+"merle","metal","meteore","metre","meuble","miroir","mode","moine","mois","monde",
+"mont","montre","morceau","morsure","mot","moteur","mouette","moule","mousse","mouton",
+"mouvement","mur","muscle","musee","mythe","nage","naitre","nappe","navire","neige",
+"nerf","neuf","nez","niche","noir","noix","nom","nombre","nord","note",
+"nuage","nuit","nulle","objet","ocre","odeur","œil","offre","ogre","oiseau",
+"olive","ombre","oncle","onde","ongle","opera","orange","orage","oreille","orgue",
+"or","ours","outil","ouvert","ouvrage","pacte","page","pain","paire","palais",
+"pale","panier","panne","papier","paquet","parc","parfum","parole","part","passe",
+"patte","pause","pays","peau","peigne","peine","pelage","pelle","peche","pendule",
+"pensee","perle","perte","pesee","petit","peur","phare","photo","phrase","pied",
+"pierre","pilote","pince","piste","place","plage","plaine","plan","plante","plat",
+"pluie","plume","poche","poids","poire","poisson","poivre","pomme","pont","porte",
+"port","pose","poste","poteau","poudre","poule","pouls","pourpre","poussin","pouvoir",
+"prairie","pretre","preuve","prix","proche","projet","promesse","propre","prose","prune",
+"public","puis","puits","punaise","purete","quai","quart","queue","quinze","radio",
+"raisin","rang","rare","rat","rayon","recolte","reine","repos","reste","reve",
+"riche","rideau","rire","rive","robe","roche","ronde","rose","route",
+"roue","rouge","ruche","sable","sage","saison","salade","sale",
+"salle","salon","sang","sante","sapin","sardine","sauce","saule","saumon","saut",
+"savoir","scene","scolaire","secret","seize","semaine","serein","serpent","serre",
+"service","seuil","seul","signe","silence","simple","singe","sirene",
+"soif","soir","soleil","solide","sombre","songe","sorte","souffle","soupe",
+"sourire","source","souvenir","spectre","sport","stable","stage","statue","stylo",
+"sucre","suite","superbe","sur","table","tache","taille","talent","tapis",
+"tard","tasse","taureau","technique", "temps", "tendre", "tenue", "terme",
+"terre", "theme", "tige", "timbre", "tir", "titre", "toile",
+"tonnerre", "torche", "tortue", "total", "tour", "tournoi", "trace", "train", "trait", "trame",
+"tranche","travail","trefle","tremble","trente","tresor","trois","trompe","trou","troupe",
+"tube","tuile","turban","type","union","unique","unite","usage","usine","utile",
+"valeur","valise","vapeur","vase","veau","veille","vendeur","vent",
+"verbe","verre","vert","veste","vieux","vigne","ville","vingt","violet",
+"visage","visite","vitesse","vivant","voile","voisin","voiture","volcan","volume",
+"vote","voyage","wagon","zebre","zone"];
+document.getElementById("ß").style.display = "none";
+}
+
+
+if(document.getElementById("langue").value === "en"){
+    liste_mots = ['computer', 'javascript', 'python', 'document', 'programming', 'developer', 'interface', 'application', 'network',
+    "abandon","bee","aberration","absence","absolute","accent","acceptance","accord",
+    "welcome","water","weather","week","weight","well","west","what","wheel",
+    "when","where","which","while","white","whole","wide","wife",
+    "wild","will","window","wine","wing","winter","wisdom","wise","wish",
+    "with","without","woman","wonder","wood","word","work","world","worry","worse",
+    "worst","worth","wrap","write","wrong","yard","year","yellow","yesterday",
+  "young","your","yourself","apple","ball","banana","book","girl","bird","fish",
+"train","bike","road","house","home","room","door","window",
+"table","chair","bed","food","water","milk","bread","cake","rice",
+"school","class","teacher","student","friend","family","mother","father",
+"sister","brother","baby","child","man","woman","people",
+"sun","moon","star","sky","cloud","rain","snow","wind","fire","water",
+"tree","flower","grass","leaf","fruit","seed","forest","river","lake",
+"day","night","morning","evening","today","tomorrow","yesterday",
+"happy","sad","big","small","good","bad","fast","slow","hot","cold",
+"new","old","easy","hard","clean","dirty","full","empty",
+"run","walk","jump","sit","stand","sleep","eat","drink","read","write",
+"play","work","learn","teach","help","build","open","close","start","stop",
+"look","see","hear","talk","answer","think","know","like",
+"love","hate","want","need","give","take","find","lose","use","make",
+"game","toy","music","song","movie","story","picture","color","red","blue",
+"green","yellow","black","white","orange","pink","brown","gray",
+"number","three","four","five","six","seven","eight","nine","ten",
+"time","clock","hour","minute","second","week","month","year",
+"money","shop","store","market","food","price","bag","box",
+"city","town","village","street","park","school","office","hospital",
+"phone","computer","screen","keyboard","mouse","internet","email",
+"yes","no","hello","bye","please","thanks","sorry",
+"left","right","down","inside","outside","near","far",
+"easy","simple","clear","same","different","true","false",
+"game","win","lose","score","point","team","player",
+"face","eye","nose","mouth","hand","foot",
+"shirt","pants","shoes","hat","coat","dress",
+"animal","farm","cow","pig","sheep","horse","duck","chicken",
+"weather","sunny","rainy","cloudy","windy","cold","warm","apple","banana","orange","grapes","lemon","peach","tomato","potato",
+"animal","rabbit","monkey","turtle","donkey","kitten","puppy",
+"family","mother","father","sister","brother","friend","people",
+"school","teacher","student","lesson","pencil","paper","window","garden",
+"house","kitchen","bedroom","bathroom","living","garage",
+"yellow","purple","orange","silver","golden","white","black","brown",
+"happy","smiling","laugh","simple","easy","clean","bright","quiet",
+"music","guitar","piano","violin","drums","song","movie","cartoon",
+"summer","winter","spring","autumn","morning","evening","nighttime",
+"travel","holiday","vacation","ticket","airport","station","luggage",
+"computer","screen","keyboard","internet","website","email","button",
+"football","baseball","basketball","tennis","running","cycling","swimming",
+"doctor","nurse","hospital","clinic","health","medicine",
+"market","store","shopping","money","wallet","credit","price",
+"driver","engine","vehicle","street","traffic","bridge",
+"flower","forest","mountain","island","river","ocean","desert",
+"answer","question","number","letter","memory","random",
+"player","winner","losing","points","score","level",
+"listen","speak","reading","writing","learning","thinking",
+"inside","outside","between","around","before","after",
+"weather","sunny","cloudy","rainy","stormy","windy","color","red","blue","green","yellow","black","white","orange","pink","purple","number","one","two","three","four","five","seven","eight","nine"
+];
+document.getElementById("ß").style.display = "none";
+}
+if(document.getElementById("langue").value === "de"){
+    liste_mots = ['dokument', 'programmierung', 'entwickler', 'netzwerk',
+    "biene","aberration","abwesenheit","absolut","akzent","akzeptanz","accord",
+    "willkommen","wasser","wetter","woche","gewicht","gut","westen","nass","wann","welche","wahrend","weiß","wer","ganz","warum","breit","ehefrau","apfel","banane","brot","kase","milch","wasser","reis","kuchen","fisch",
+"hund","katze","vogel","pferd","schaf","schwein","huhn","ente","tier",
+"mann","frau","kind","baby","mutter","vater","bruder","schwester","familie",
+"freund","freundin","lehrer","schuler","schule","klasse","buch","stift","tisch",
+"stuhl","bett","haus","wohnung","zimmer","fenster","garten",
+"auto","zug","fahrrad","straße","weg","stadt","dorf","park","platz",
+"sonne","mond","stern","himmel","wolke","regen","schnee","wind","wetter",
+"baum","blume","gras","blatt","wald","fluss","see","meer",
+"tag","nacht","morgen","abend","heute","morgen","gestern","zeit",
+"gut","schlecht","groß","klein","alt","neu","heiß","kalt","schnell","langsam",
+"leicht","schwer","voll","leer","sauber","schmutzig",
+"gehen","laufen","springen","sitzen","stehen","schlafen","essen","trinken",
+"lesen","schreiben","spielen","arbeiten","lernen","helfen","machen",
+"sehen","horen","sprechen","sagen","fragen","antworten","denken","wissen",
+"lieben","mogen","hassen","wollen","brauchen","geben","nehmen","finden","verlieren",
+"spiel","ball","musik","lied","film","bild","farbe","blau","grun","gelb",
+"schwarz","weiß","orange","rosa","braun","grau",
+"eins","zwei","drei","vier","funf","sechs","sieben","acht","neun","zehn",
+"geld","laden","markt","preis","tasche",
+"hand","bein","fußball","kopf","auge","nase","mund",
+"hemd","hose","schuhe","jacke","kleid",
+,"nein","hallo","tschuss","bitte","danke","entschuldigung",
+"links","rechts","oben","unten","drinnen","draußen","fern",
+"spieler","team","punkt","sieg","verlust","Apfel","Banane","Orange","Traube","Zitrone","Pfirsich","Tomate","Kartoffel",
+"Tierchen","Kaninchen","Affe","Schildkrote","Esel",
+"Familie","Mutter","Vater","Schwester","Bruder","Freund","Menschen",
+"Schule","Lehrer","Schuler","Unterricht","Bleistift","Papier","Fenster","Garten",
+"Haus","Kuche","Schlafzimmer","Badezimmer","Wohnung","Garage",
+"Gelb","Lila","Orange","Silber","Golden","Weiß","Schwarz","Braun",
+"Frohlich","Lachen","Einfach","Sauber","Hell","Ruhig",
+"Musik","Gitarre","Klavier","Geige","Trommel","Lied","Film","Zeichentrick",
+"Sommer","Winter","Fruhling","Herbst","Morgen","Abend","Nacht",
+"Reise","Urlaub","Ferien","Ticket","Flughafen","Bahnhof","Gepack",
+"Computer","Bildschirm","Tastatur","Internet","Webseite","Knopf",
+"Fußball","Basketball","Tennis","Laufen","Radfahren","Schwimmen",
+"Arzt","Krankenschwester","Krankenhaus","Klinik","Gesundheit","Medizin",
+"Markt","Laden","Einkaufen","Geldborse","Kredit","Preis",
+"Fahrer","Motor","Fahrzeug","Straße","Verkehr","Brucke",
+"Blume","Wald","Berg","Fluss","Ozean","Wuste",
+"Antwort","Frage","Nummer","Buchstabe","Gedachtnis","Zufall",
+"Spieler","Gewinner","Verlierer","Punkte","Ergebnis","Stufe",
+"Horen","Sprechen","Lesen","Schreiben","Lernen","Denken",
+"Drinnen","Draußen","Zwischen","Rundherum","Vorher","Nachher",
+"Wetter","Sonnig","Bewolkt","Regnerisch","Sturmisch","Windig"];
+document.getElementById("ß").style.display = "inline";
+}
+    
+
+
+let mot_a_trouver=liste_mots[Math.floor(Math.random() * liste_mots.length)];
+mot_a_trouver=mot_a_trouver.toLowerCase();
+document.getElementById("resultat").innerHTML=mot_a_trouver;
+document.getElementById("mot_a_trouver").innerHTML="";
+for (let i=0; i<mot_a_trouver.length; i++){
+    document.getElementById("mot_a_trouver").innerHTML+="_ ";
+document.getElementById("nb_erreurs").innerHTML=0;
+document.getElementById("Erreur").innerHTML="Erreurs : ";
+}
+afficherPendu();
+}
+function verifierLettre() {
+    let lettre = document.getElementById("mot").value;
+    lettre = lettre.toLowerCase();
+    document.getElementById("mot").value = "";
+    let mot_a_trouver=document.getElementById("resultat").textContent;
+    
+    if (lettre.length > 1) {
+        if (lettre === mot_a_trouver) {
+            document.getElementById("mot_a_trouver").innerHTML = mot_a_trouver;
+           setTimeout(() => alert("Vous avez gagne !"), 100);
+            
+        } else {
+            alert("Mauvais mot !");
+            document.getElementById("nb_erreurs").innerHTML = parseInt(document.getElementById("nb_erreurs").textContent) + 1;
+            document.getElementById("Erreur").innerHTML += lettre + ", ";
+            if (document.getElementById("langue").value === "fr") {
+                if (parseInt(document.getElementById("nb_erreurs").textContent) >= 6) {
+                    defaite();
+                }
+            } else if (document.getElementById("langue").value === "en") {
+                if (parseInt(document.getElementById("nb_erreurs").textContent) >= 10) {
+                    defaite();
+                }
+            } else if (document.getElementById("langue").value === "de") {
+                if (parseInt(document.getElementById("nb_erreurs").textContent) >= 15) {
+                    defaite();
+                }
+            }
+        }
+    } else if (mot_a_trouver.includes(lettre)) {
+        let affichage = document.getElementById("mot_a_trouver").textContent;
+        for (let i = 0; i < mot_a_trouver.length; i++) {
+            if (mot_a_trouver[i] === lettre) {
+                affichage = affichage.substring(0, i * 2) + lettre + affichage.substring(i * 2 + 1);
+            }
+        }   
+        document.getElementById("mot_a_trouver").innerHTML = affichage;
+    } else {
+        document.getElementById("Erreur").innerHTML += lettre + ", ";
+        document.getElementById("nb_erreurs").innerHTML = parseInt(document.getElementById("nb_erreurs").textContent) + 1;
+        if (document.getElementById("langue").value === "fr") {
+                if (parseInt(document.getElementById("nb_erreurs").textContent) >= 6) {
+                    defaite();
+                }
+            } else if (document.getElementById("langue").value === "en") {
+                if (parseInt(document.getElementById("nb_erreurs").textContent) >= 10) {
+                    defaite();
+                }
+            } else if (document.getElementById("langue").value === "de") {
+                if (parseInt(document.getElementById("nb_erreurs").textContent) >= 15) {
+                    defaite();
+                }
+            }
+                    
+                }
+            }
+        
+
+function defaite() {
+    let mot_a_trouver=document.getElementById("resultat").textContent;
+
+                    document.getElementById("mot_a_trouver").innerHTML = mot_a_trouver;
+                let count = 0;
+                const interval = setInterval(() => {
+                    document.getElementById("mot_a_trouver").style.visibility = count % 2 === 0 ? "hidden" : "visible";
+                    count++;
+                    if (count >= 10) clearInterval(interval);
+                }, 300);
+                setTimeout(() => alert("Vous avez perdu ! Le mot etait : " + mot_a_trouver), 3000);
+}
+
+const partiesPendu = ["tete", "corps", "bras-g", "bras-d", "jambe-g", "jambe-d"];
+
+function afficherPendu() {
+    let nbErreurs = parseInt(document.getElementById("nb_erreurs").textContent);
+    let langue = document.getElementById("langue").value;
+    
+    // Limite d'erreurs selon la langue
+    let limiteErreurs = langue === "fr" ? 6 : (langue === "en" ? 10 : 15);
+    
+    // Afficher les parties du pendu proportionnellement
+    let ratio = nbErreurs / limiteErreurs;
+    let partiesToShow = Math.floor(ratio * partiesPendu.length);
+    
+    for (let i = 0; i < partiesToShow; i++) {
+        document.getElementById(partiesPendu[i]).style.display = "block";
+    }
+    
+    for (let i = partiesToShow; i < partiesPendu.length; i++) {
+        document.getElementById(partiesPendu[i]).style.display = "none";
+    }
+}
+
+// Appeler cette fonction apres chaque verification
+const verifierLettreOriginal = verifierLettre;
+verifierLettre = function() {
+    verifierLettreOriginal();
+    afficherPendu();
+};
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="items">
+<h1> Jeu de Pendu </h1>
+<select id="langue" class="joueur">
+    <option value="fr">Français</option>
+    <option value="en">Anglais</option>
+    <option value="de">Allemand</option>
+    </select><br>
+<p id="mot_a_trouver" style="font-size: 50px;"></p>
+<input type="text" id="mot" name="mot" class="joueur" placeholder="Entrez un mot ou une lettre" style="width: 200px;">
+<button id="ß" style="font-weight: bold; display: none;" onclick="document.getElementById('mot').value += 'ß';">ß</button><br><br>
+<button onclick="verifierLettre()">Verifier</button><br><br>
+<button onclick="initialisation()">Nouvelle partie</button><br><br><br><br>
+<p id="resultat" style="display:none;"></p>
+<div style=" color: rgb(0, 0, 0); font-size: 50px; display : inline;">
+<div style=" color: rgb(0, 0, 0); font-size: 50px; display: block;">
+    <P style="margin-left: 50px; display: inline;"> Nombre d'erreurs : </P>
+    <p id="nb_erreurs" style="margin-left: 50px; display: inline;">0</p>
+    <P id="Erreur" style="margin-left: 50px;"> Erreurs : </P>
+</div>
+</div>
+        </div>
+<div id="pendu" style="margin: 30px auto; width: 200px; height: 250px;">
+    <svg width="400" height="450" style="border: 2px solid black;" class="items">
+        <!-- Potence -->
+        <line x1="20" y1="400" x2="280" y2="400" stroke="black" stroke-width="6"/>
+        <line x1="100" y1="400" x2="100" y2="30" stroke="black" stroke-width="6"/>
+        <line x1="100" y1="30" x2="240" y2="30" stroke="black" stroke-width="6"/>
+        <line x1="240" y1="30" x2="240" y2="90" stroke="black" stroke-width="6"/>
+        
+        <!-- Tete -->
+        <circle id="tete" cx="240" cy="130" r="40" stroke="black" stroke-width="3" fill="none" style="display:none;"/>
+        
+        <!-- Corps -->
+        <line id="corps" x1="240" y1="170" x2="240" y2="270" stroke="black" stroke-width="3" style="display:none;"/>
+        
+        <!-- Bras gauche -->
+        <line id="bras-g" x1="240" y1="200" x2="170" y2="250" stroke="black" stroke-width="3" style="display:none;"/>
+        
+        <!-- Bras droit -->
+        <line id="bras-d" x1="240" y1="200" x2="310" y2="250" stroke="black" stroke-width="3" style="display:none;"/>
+        
+        <!-- Jambe gauche -->
+        <line id="jambe-g" x1="240" y1="270" x2="190" y2="350" stroke="black" stroke-width="3" style="display:none;"/>
+        
+        <!-- Jambe droite -->
+        <line id="jambe-d" x1="240" y1="270" x2="290" y2="350" stroke="black" stroke-width="3" style="display:none;"/>
+    </svg>
+</div>
+</div>
+</body>
+
+</html>
+
+
