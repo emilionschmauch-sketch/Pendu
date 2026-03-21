@@ -70,6 +70,7 @@ document.addEventListener("keydown", function(event) {
 });
 
 
+
 function initialisation (){
     if(document.getElementById("langue").value === "fr"){
 liste_mots = ['emilion', 'ordinateur', 'javascript', 'python', 'document', 'programmation', 'developpeur', 'interface', 'application', 'reseau', 
@@ -372,7 +373,9 @@ document.getElementById("nb_erreurs").innerHTML=0;
 document.getElementById("Erreur").innerHTML="Erreurs : ";
 }
 afficherPendu();
+
 }
+setTimeout(initialisation, 1);
 function verifierLettre() {
     let lettre = document.getElementById("mot").value;
     lettre = lettre.toLowerCase();
@@ -472,7 +475,6 @@ verifierLettre = function() {
     verifierLettreOriginal();
     afficherPendu();
 };
-initialisation();      
     </script>
 </head>
 <body>
@@ -531,5 +533,3 @@ initialisation();
 </body>
 
 </html>
-
-
