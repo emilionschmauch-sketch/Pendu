@@ -377,6 +377,7 @@ afficherPendu();
 }
 setTimeout(initialisation, 1);
 function verifierLettre() {
+    if (!(document.getElementById("mot").value === "")) {
     if (!(document.getElementById("Erreur").textContent.includes(' ' + document.getElementById("mot").value.toLowerCase()))) {
     let lettre = document.getElementById("mot").value;
     lettre = lettre.toLowerCase();
@@ -437,6 +438,7 @@ function verifierLettre() {
                 alert("Vous avez déjà essayé cette lettre !");
                 document.getElementById("mot").value = "";
             }
+}
 }
 
 function defaite() {
