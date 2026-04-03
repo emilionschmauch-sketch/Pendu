@@ -67,6 +67,22 @@
         .niveau {
             display: inline-block;
         }
+        a{
+            text-decoration: none;
+             font-size: 20px;
+              color: #0066cc;
+               font-weight: bold;
+                padding: 10px 15px;
+                 border: 2px solid #0066cc;
+                  border-radius: 5px;
+                   display: inline-block;     
+        }
+        a:hover {
+            background-color: #0066cc;
+            color: white;
+            transform: scale(1.1);
+             transition: transform 0.2s;
+        }
     </style>
     <script>    
 document.addEventListener("keydown", function(event) {
@@ -304,7 +320,7 @@ niveau3=[
 "cognition","conglomerat","conjecture","consanguinite","contingence",
 "corollaire","cosmogonie","crepuscule","cryptographie","delectation",
 "demagogie","denouement","desuetude","dichotomie","dissonance",
-"dogmatisme","ebullition","eclectisme","efflorescence","egregore",
+"dogmatisme","ebullition","eclectisme","efflorescence",
 "emanation","empirisme","enigmatique","epiphanie","equanimite",
 "eschatologie","estampe","etherealite","exegese","exhortation",
 "exsangue","extemporane","fantasmagorie","ferrugineux","fluctuation",
@@ -573,6 +589,7 @@ document.getElementById("nb_erreurs").innerHTML=0;
 document.getElementById("Erreur").innerHTML="Erreurs : ";
 }
 afficherPendu();
+document.getElementById("définition").style.display = "none";
 
 }
 setTimeout(initialisation, 1);
@@ -588,6 +605,10 @@ function verifierLettre() {
         if (lettre === mot_a_trouver) {
             document.getElementById("mot_a_trouver").innerHTML = mot_a_trouver;
            setTimeout(() => alert("Vous avez gagne !"), 100);
+           if (document.getElementById("langue").value === "fr" && document.getElementById("niveau3").checked) {
+            document.getElementById("définition").style.display = "inline";
+            document.getElementById("def_lien").href = "https://www.larousse.fr/dictionnaires/francais/" + mot_a_trouver;
+           }
             
         } else {
             alert("Mauvais mot !");
@@ -597,7 +618,15 @@ function verifierLettre() {
                 if (parseInt(document.getElementById("nb_erreurs").textContent) >= 6) {
                     defaite();
                 }
-            } else if ((document.getElementById("langue").value === "en") || (document.getElementById("niveau3").checked)) {
+            } 
+            else if (document.getElementById("langue").value === "fr" && document.getElementById("niveau3").checked) {
+                    if (parseInt(document.getElementById("nb_erreurs").textContent) >= 8) {
+                        defaite();
+                        document.getElementById("définition").style.display = "inline";
+                        document.getElementById("def_lien").href = "https://www.larousse.fr/dictionnaires/francais/" + mot_a_trouver;
+                    }
+                }
+            else if ((document.getElementById("langue").value === "en") || (document.getElementById("niveau3").checked)) {
                 if (parseInt(document.getElementById("nb_erreurs").textContent) >= 10) {
                     defaite();
                 }
@@ -622,10 +651,12 @@ function verifierLettre() {
                 if (parseInt(document.getElementById("nb_erreurs").textContent) >= 6) {
                     defaite();
                 }
-        }
+            }
                 else if (document.getElementById("langue").value === "fr" && document.getElementById("niveau3").checked) {
                     if (parseInt(document.getElementById("nb_erreurs").textContent) >= 8) {
                         defaite();
+                        document.getElementById("définition").style.display = "inline";
+                        document.getElementById("def_lien").href = "https://www.larousse.fr/dictionnaires/francais/" + mot_a_trouver;
                     }
                 }
              else if (document.getElementById("langue").value === "en")  {
@@ -705,6 +736,13 @@ verifierLettre = function() {
     <b class="niveau">3</b><input type="radio" id="niveau3" class="niveau" name="niveau" onclick="initialisation()">
     <br>
 <p id="mot_a_trouver" style="font-size: 50px;"></p>
+
+<div style="display: none;" id="définition">
+    <a id="def_lien" href="#" target="_blank" onmouseover="this.style.backgroundColor='#0066cc'; this.style.color='white';" 
+     onmouseout="this.style.backgroundColor='#0066ff'; this.style.color='white';">Définition</a> 
+    <br><br><br><br>
+</div>
+
 <input type="text" id="mot" name="mot" class="joueur" placeholder="Entrez un mot ou une lettre" style="width: 200px;">
 <button id="ß" style="font-weight: bold; display: none;" onclick="document.getElementById('mot').value += 'ß';">ß</button><br><br>
 <button onclick="verifierLettre()">Verifier</button><br><br>
