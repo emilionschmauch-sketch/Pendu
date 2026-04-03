@@ -622,12 +622,13 @@ function verifierLettre() {
                 if (parseInt(document.getElementById("nb_erreurs").textContent) >= 6) {
                     defaite();
                 }
+        }
                 else if (document.getElementById("langue").value === "fr" && document.getElementById("niveau3").checked) {
                     if (parseInt(document.getElementById("nb_erreurs").textContent) >= 8) {
                         defaite();
                     }
                 }
-            } else if (document.getElementById("langue").value === "en")  {
+             else if (document.getElementById("langue").value === "en")  {
                 if (parseInt(document.getElementById("nb_erreurs").textContent) >= 10) {
                     defaite();
                 }
