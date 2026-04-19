@@ -697,23 +697,33 @@ const partiesPendu = ["tete", "corps", "bras-g", "bras-d", "jambe-g", "jambe-d"]
 function afficherPendu() {
     let nbErreurs = parseInt(document.getElementById("nb_erreurs").textContent);
     let langue = document.getElementById("langue").value;
-    
-    // Limite d'erreurs selon la langue
-    let limiteErreurs = langue === "fr" ? 8 : (langue === "en" ? 10 : 15);
-    
-    // Afficher les parties du pendu proportionnellement
+
+    let limiteErreurs; // ← déclaration UNE SEULE FOIS
+
+    if (langue === "fr" && (document.getElementById("niveau1").checked || document.getElementById("niveau2").checked)) {
+        limiteErreurs = 6;
+    }
+    else if (langue === "fr" && document.getElementById("niveau3").checked) {
+        limiteErreurs = 8;
+    }
+    else if (langue === "en") {
+        limiteErreurs = 10;
+    }
+    else if (langue === "de") {
+        limiteErreurs = 15;
+    }
+
     let ratio = nbErreurs / limiteErreurs;
     let partiesToShow = Math.floor(ratio * partiesPendu.length);
-    
+
     for (let i = 0; i < partiesToShow; i++) {
         document.getElementById(partiesPendu[i]).style.display = "block";
     }
-    
+
     for (let i = partiesToShow; i < partiesPendu.length; i++) {
         document.getElementById(partiesPendu[i]).style.display = "none";
     }
 }
-
 // Appeler cette fonction apres chaque verification
 const verifierLettreOriginal = verifierLettre;
 verifierLettre = function() {
